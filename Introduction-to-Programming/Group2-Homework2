@@ -1,0 +1,260 @@
+TASK1: Преместване (shift)
+Дадена е последователност от N цели числа (1 <= N <= 100000) и число K (|K| <= 100000). Преместете последователността от числа с К позиции. Местенето е циклично, т. е. последните елементи стават първи. Ако К е положително, ги преместете надясно, а ако К е отрицателно - наляво.
+
+Вход: На първия ред е дадено числото N - броя цели числа от списъка, който трябва да се премести. На следващия ред са дадени N цели числа. На третия ред е дадено числото К.
+Примери:
+
+Вход:
+5
+5 3 7 4 6
+3
+
+Изход:
+7 4 6 5 3
+
+Вход:
+5
+3 4 2 6 5
+-1
+
+Изход:
+4 2 6 5 3
+
+TASK2: Вторичен диагонал (secondary)
+По дадено число N (1 <= N <= 100) създайте матрица N x N по следните правила:
+числата по вторичния диагонал да са равни на 1
+числата над вторичния диагонал да са равни на 0
+числата под вторичния диагонал да са равни на 2
+Матрицата да се подава на функция, която да изпълни задачата.
+
+Вход: Програмата получава като единствен вход числото N.
+
+Изход: Програмата трябва да изведе получената матрица
+
+Вход:
+4
+
+Изход:
+0 0 0 1 
+0 0 1 2 
+0 1 2 2 
+1 2 2 2 
+
+Шифърът на Юлий Цезар (caesar)
+Юлий Цезар използвал свой начин за шифриране на текст. Всяка буква от дадена дума се замествала със следваща буква от азбуката с определен брой позиции. Ако буквата трябва да се промени с повече позиции отколкото е азбуката, се започва от началото на азбуката.
+Напишете програма, която по даден шифър и число, определящо с колко позиции е преместена всяка буква, разшифрова текста.
+
+Вход: На първия ред е даден низ от главни латински букви без интервали. На следващия ред е дадено число К - с колко позиции е била изместена всяка буква.
+Изход: Трябва да се изведе разшифрования низ.
+
+Вход:
+BCTKC
+2
+
+Изход:
+ZARIA
+
+Вход:
+YWFNHMTJRSTLTLTYNS
+5
+
+Изход:
+TRAICHOEMNOGOGOTIN
+
+Брой цифри (digits)
+Даден е низ от цифри, малки и главни латински букви. Да се напише рекурсивна функция, която връща броя цифри в низа.
+
+Вход:
+5ducksflew10kilometersin8hours
+
+Изход:
+4
+
+***************************************************************SOLUTIONS***************************************************************
+1.
+const int MAX_SIZE = 100;
+
+void inputArr(int arr[], int size);
+void printArr(int arr[], int size);
+
+void shiftLeft(int arr[], int size, int temp)
+{
+	if (size <= 1)
+	{
+		arr[0] = temp;
+		return;
+	}
+
+	arr[size - 1] = arr[size - 2];
+
+	shiftLeft(arr, size - 1, temp);
+}
+
+void shiftRight(int arr[], int size, int temp)
+{
+	if (size <= 1)
+	{
+		arr[size - 1] = temp;
+		return;
+	}
+
+	arr[0] = arr[1];
+
+	return shiftRight(arr + 1, size - 1, temp);
+}
+
+void changePosition(int arr[], int size, int moveWith)
+{
+	if (moveWith == 0)
+		return;
+
+	if (moveWith > 0)
+	{
+		int lastElement = arr[size - 1];
+		shiftLeft(arr, size, lastElement);
+	}
+
+	else
+	{
+		int firstElement = arr[0];
+		shiftRight(arr, size, firstElement);
+	}
+
+	return changePosition(arr, size, (moveWith > 0 ? moveWith - 1 : moveWith + 1));
+}
+
+int main()
+{
+	int arr[MAX_SIZE] = { 0 };
+	int size = -1;
+	int moveWith = -1;
+
+	cout << "How Many Numbers Do You Want To Store? ";
+	cin >> size;
+	cout << "How Do You Want To Change Their Position? ";
+	cin >> moveWith;
+
+	inputArr(arr, size);
+
+	changePosition(arr, size, moveWith);
+	
+	cout << "\n    Your New Array: ";
+	printArr(arr, size);
+
+	return 0;
+}
+
+void inputArr(int arr[], int size)
+{
+	if (size <= 0)
+		return;
+
+	cin >> arr[0];
+
+	return inputArr(arr + 1, size - 1);
+}
+
+void printArr(int arr[], int size)
+{
+	if (size < 1)
+		return;
+
+	cout << arr[0] << " ";
+
+	return printArr(arr + 1, size - 1);
+}
+
+2.
+const int MAX_SIZE = 100;
+
+void generateMatrix(int darr[][MAX_SIZE], int rows, int cols)
+{
+	for (int i = 0; i < rows; ++i)
+	{
+		for (int j = 0; j < cols; ++j)
+		{
+			if (i + j < cols - 1)
+				darr[i][j] = 0;
+			if (i + j == cols - 1)
+				darr[i][j] = 1;
+			if (i + j > cols - 1)
+				darr[i][j] = 2;
+		}
+	}
+}
+
+int main()
+{
+	int darr[MAX_SIZE][MAX_SIZE] = { 0 };
+	int rows = -1;
+
+	cout << "Enter Number Of Rows And Columns: ";
+	cin >> rows;
+
+	int cols = rows;
+
+	generateMatrix(darr, rows, cols);
+
+	cout << "\n Your Matrix:" << endl;
+	for (int i = 0; i < rows; ++i)
+	{
+		for (int j = 0; j < cols; ++j)
+		{
+			cout << darr[i][j] << " ";
+		}
+		cout << endl;
+	}
+
+	return 0;
+}
+
+3.
+void decrypt(char str[], int takeAway)
+{
+	if (str[0] == '\0')
+		return;
+
+	str[0] = (((str[0] - takeAway) < 'A') ? ('Z' - (('A' - (str[0] - (takeAway - 1))))) : str[0] - takeAway);
+
+	return decrypt(str + 1, takeAway);
+}
+
+int main()
+{
+	char str[32] = "";
+	int takeAway = -1;
+
+	cin.getline(str, 32);
+
+	cout << "Enter The Number By Which The Letters Have Been Moved: ";
+	cin >> takeAway;
+
+	decrypt(str, takeAway);
+
+	cout << "\n    Reult: " << str << endl;
+
+	return 0;
+}
+
+4.
+int numberDigits(char str[])
+{
+	if (str[0] == '\0')
+		return 0;
+
+	if (!(str[0] >= '0' && str[0] <= '9'))
+		return 0 + numberDigits(str + 1);
+
+	return 1 + numberDigits(str + 1);
+}
+
+int main()
+{
+	char str[64] = "";
+
+	cin.getline(str, 64);
+
+	cout << "\n    Result: " << (numberDigits(str)) << endl;
+
+	return 0;
+}

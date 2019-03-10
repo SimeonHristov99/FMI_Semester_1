@@ -1,0 +1,345 @@
+=========================================================== TASK 00 ================================================================
+Програмата да извежда матрицата, получена от въведената, като всеки нейн елемент е увеличен с 10.
+
+int row = -1, column = -1;
+	double arr2[MAX_SIZE][MAX_SIZE] = { 0 };
+
+	cin >> row >> column;
+
+	for (int i = 0; i < row; ++i)
+	{
+		for (int j = 0; j < column; ++j)
+		{
+			cin >> arr2[i][j];
+		}
+	}
+
+	for (int i = 0; i < row; ++i)
+	{
+		for (int j = 0; j < column; ++j)
+		{
+			cout << (arr2[i][j] + 10) << " ";
+		}
+		cout << endl;
+	}
+  
+  
+************************************************************************************************************************************
+=========================================================== TASK 01 ================================================================
+Програмата да намира и извежда минималния и максималния елемент в матрицата.
+
+
+int row = -1, column = -1;
+	int arr2[MAX_SIZE][MAX_SIZE] = { 0 };
+	int min = -1, max = -1;
+
+	cin >> row >> column;
+
+	for (int i = 0; i < row; ++i)
+	{
+		for (int j = 0; j < column; ++j)
+		{
+			cin >> arr2[i][j];
+		}
+	}
+
+	cout << "\n Current matrix: " << endl;
+
+	for (int i = 0; i < row; ++i)
+	{
+		for (int j = 0; j < column; ++j)
+		{
+			cout << " ";
+			cout << arr2[i][j] << " ";
+		}
+		cout << endl;
+	}
+
+	min = arr2[0][0];
+	max = arr2[0][0];
+
+	for (int i = 0; i < row; ++i)
+	{
+		for (int j = 0; j < column; ++j)
+		{
+			if (i == 0 & j == 0) continue;
+			(arr2[i][j] < min) ? (min = arr2[i][j]) : min;
+			(arr2[i][j] > max) ? (max = arr2[i][j]) : max;
+		}
+	}
+	
+	cout << "\nThe biggest number in the matrix is " << max << ".\nThe smallest number in the matrix is " << min << "." << endl;
+
+
+
+
+************************************************************************************************************************************
+=========================================================== TASK 02 ================================================================
+Програмата да намира и извежда сумата от елементите на квадратна матрица на:
+всеки ред
+всеки стълб
+главния диагонал
+под главния диагонал
+над главния диагонал
+вторичния диагонал
+под вторичния диагонал
+над вторичния диагонал
+
+
+
+#include "pch.h"
+#include <iostream>
+
+using namespace std;
+
+const int MAX_SIZE = 100;
+
+void sumColumns(int row, int column, int ndarr[][100])
+{
+	for (int j = 0; j < column; ++j)
+	{
+		int sumC = 0;
+		for (int i = 0; i < row; ++i)		
+			sumC += ndarr[i][j];		
+		cout << "Sum of column " << j + 1 << " is " << sumC << "." << endl;
+	}
+}
+
+void sumRows(int row, int column, int ndarr[][100])
+{
+	for (int i = 0; i < row; ++i)
+	{
+		int sumC = 0;
+		for (int j = 0; j < column; ++j)
+			sumC += ndarr[i][j];
+		cout << "Sum of row " << i + 1 << " is " << sumC << "." << endl;
+	}
+}
+
+void UpMainDiagonalSum(int row, int column, int ndarr[][100])
+{
+	int sum = 0;
+	for (int i = 0; i < row; ++i)
+	{
+		for (int j = 0; j < column; ++j)
+			if (i < j)
+				sum += ndarr[i][j];
+	}
+	cout << "Sum of elements above the main diagonal is " << sum << "." << endl;
+}
+
+void MainDiagonalSum(int row, int column, int ndarr[][100])
+{
+	int sum = 0;
+	for (int i = 0; i < row; ++i)
+	{
+		for (int j = 0; j < column; ++j)
+			if (i == j)
+				sum += ndarr[i][j];
+	}
+	cout << "Sum of elements on the main diagonal is " << sum << "." << endl;
+}
+
+void BelowMainDiagonalSum(int row, int column, int ndarr[][100])
+{
+	int sum = 0;
+	for (int i = 0; i < row; ++i)
+	{
+		for (int j = 0; j < column; ++j)
+			if (i > j)
+				sum += ndarr[i][j];
+	}
+	cout << "Sum of elements below the main diagonal is " << sum << "." << endl;
+}
+
+void UpSecondaryDiagonalSum(int row, int column, int ndarr[][100])
+{
+	int sum = 0;
+	for (int i = 0; i < row; ++i)
+	{
+		for (int j = 0; j < column; ++j)
+			if ((i + j) < (row - 1))			
+				sum += ndarr[i][j];
+	}
+	cout << "Sum of elements above the secondary diagonal is " << sum << "." << endl;
+}
+
+void SecondaryDiagonalSum(int row, int column, int ndarr[][100])
+{
+	int sum = 0;
+	for (int i = 0; i < row; ++i)
+	{
+		for (int j = 0; j < column; ++j)
+			if ((i + j) == (row - 1))			
+				sum += ndarr[i][j];			
+	}
+	cout << "Sum of elements on the secondary diagonal is " << sum << "." << endl;
+}
+
+void BelowSecondaryDiagonalSum(int row, int column, int ndarr[][100])
+{
+	int sum = 0;
+	for (int i = 0; i < row; ++i)
+	{
+		for (int j = 0; j < column; ++j)
+			if ((i + j) > (row - 1))
+				sum += ndarr[i][j];
+	}
+	cout << "Sum of elements below the secondary diagonal is " << sum << "." << endl;
+}
+
+int main()
+{
+	int row = -1, column = -1;
+	int sumRow = 0, sumColumn = 0, sumMD = 0, sumUMainD = 0, sumBelowMD = 0, sumSD = 0, sumAboveSD = 0, sumBelowSD = 0;
+	int darr[MAX_SIZE][MAX_SIZE] = { 0 };
+
+	cin >> column >> row;
+
+	for (int i = 0; i < row; ++i)
+	{
+		for (int j = 0; j < column; ++j)
+		{
+			cin >> darr[i][j];
+		}
+	}
+	
+	cout << "\n Current matrix: " << endl;
+
+	for (int i = 0; i < row; ++i)
+	{
+		cout << " ";
+		for (int j = 0; j < column; ++j)
+		{
+			cout << darr[i][j] << " ";
+		}
+		
+		cout << endl;
+	}
+
+	cout << endl;
+
+	UpMainDiagonalSum(row, column, darr);
+	MainDiagonalSum(row, column, darr);
+	BelowMainDiagonalSum(row, column, darr);
+	UpSecondaryDiagonalSum(row, column, darr);
+	SecondaryDiagonalSum(row, column, darr);
+	BelowSecondaryDiagonalSum(row, column, darr);
+
+	cout << endl;
+
+	sumColumns(row, column, darr);
+
+	cout << endl;
+
+	sumRows(row, column, darr);
+
+	return 0;
+}
+
+
+
+************************************************************************************************************************************
+=========================================================== TASK 03 ================================================================
+
+
+
+Да се въвежда цяло число х, да се провери дали х е елемент на матрицата, и
+ако е - да се изведе позицията на елемнта в матрицата и елемента да се умножи по 10, а
+ако не е елемент на матрицата да се изведе подходящо съобщение.
+
+
+#include "pch.h"
+#include <iostream>
+
+using namespace std;
+
+const int MAX_SIZE = 100;
+
+void CinCoutMatrix(int row, int column, int darr[][MAX_SIZE])
+{
+	cout << "\nPlease Enter The Elements Of The Matrix:" << endl;
+
+	for (int i = 0; i < row; ++i)
+	{
+		for (int j = 0; j < column; ++j)
+		{
+			cin >> darr[i][j];
+		}
+	}
+
+	cout << "\nCurrent Matrix:" << endl;
+
+	for (int i = 0; i < row; ++i)
+	{
+		cout << " ";
+		for (int j = 0; j < column; ++j)
+		{
+			cout << darr[i][j] << " ";
+		}
+		cout << endl;
+	}
+}
+
+
+int main()
+{	/*
+	Да се въвежда цяло число х, да се провери дали х е елемент на матрицата, и ако е - да се изведе позицията на елемнта в матрицата и елемента да се умножи по 10,
+	а ако не е елемент на матрицата да се изведе подходящо съобщение.
+	*/
+
+	int darr[MAX_SIZE][MAX_SIZE] = { 0 };
+
+	int row = -1;
+	int column = -1;
+
+	cout << "Rows: ";
+	cin >> row;
+	cout << "Columns: ";
+	cin >> column;
+
+	CinCoutMatrix(row, column, darr);
+
+	int number = -1;
+
+	cout << "\nEnter a number that you wish to check: ";
+	cin >> number;
+
+	cout << endl;
+
+	bool found = false;
+
+	for (int i = 0; i < row; ++i)
+	{
+		for (int j = 0; j < column; ++j)
+		{
+			if (number == darr[i][j])
+			{
+				found = true;
+				cout << number << " is present in position:\nrow " << i + 1 << ", column " << j + 1 << ".\n" << endl;
+				darr[i][j] *= 10;
+			}
+		}
+	}
+
+	if (found == 0) cout << number << " is not present in the matrix you entered." << endl;
+	else
+	{
+		cout << "\nMultiplying " << number << " by 10 ...\n\nThe new matrix is:" << endl;
+
+		for (int i = 0; i < row; ++i)
+		{
+			cout << " ";
+			for (int j = 0; j < column; ++j)
+			{
+				cout << darr[i][j] << " ";
+			}
+			cout << endl;
+		}
+	}
+	
+
+	return 0;
+}
+
+****************************************END****************************************************

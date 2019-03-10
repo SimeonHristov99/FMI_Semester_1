@@ -1,0 +1,27 @@
+int number = -1;
+	int remainder = -1;
+	int tempNum = -1;
+
+	cin >> number;
+
+	tempNum = number;
+
+	bool flag = true;
+
+	remainder = number % 10;
+
+	while (tempNum >= 10)
+	{
+		tempNum = number / 10;
+		if (remainder == (tempNum % 10))
+		{
+			flag = false;
+			break;
+		}
+		else
+		{
+			number /= 10;
+		}
+	}
+
+	cout << (flag ? "All digits are different." : "Not all digits are different.") << endl;

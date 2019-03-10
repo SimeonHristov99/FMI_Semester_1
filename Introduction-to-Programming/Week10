@@ -1,0 +1,81 @@
+TASK 0
+Да се напише рекурсивна функция, която намира n-тото число от редицата на Фибоначи. Пример: при n = 10 -> 55
+
+TASK 1
+Да се напише рекурсивна функция, която проверява дали елементът x принадлежи на редицата a0, a1, ..., an-1.
+
+TASK 2
+Да се напише рекурсивна функция, която проверява дали редицата a0, a1, ..., an-1 се състои от различни елементи.
+
+TASK 3 Да се напише рекурсивна функция, която намира стойността на функцията на Акерман Ack(m, n), дефинирана за m >= 0 и n >= 0 по следния начин:
+Ack(0, n) = n+1
+Ack(m, 0) = Ack(m-1, 1), m > 0
+Ack(m, n) = Ack(m-1, Ack(m, n-1)), m > 0, n > 0. Пример: ack(0,3) = 4 ack(0,4) = 5 ack(1,0) = 2 ack(1,1) = 3 ack(2,0) = 3 ack(2,1) = 5
+
+TASK 4 Да се напише рекурсивна функция, която установява, дали в записа на естественото число n се съдържа цифрата k.
+
+----------------------------------------------------------SOLUTIONS---------------------------------------------------------
+
+1.
+int fib(int n)
+{
+	if (n <= 2)
+		return 1;
+	
+	return fib(n - 2) + fib(n - 1);
+}
+
+2.
+bool isPresent(int n, int size, int *arr)
+{
+	if (size <= 0)
+		return false;
+
+	if (n == arr[size - 1])
+		return 1;
+
+	else isPresent(n, size - 1, arr);
+}
+3.
+bool isUniqueHelper(int arr[], int size, int number)
+{
+	if (size <= 0)
+		return true;
+
+	if (arr[size - 1] == number)
+		return false;
+
+	return isUniqueHelper(arr, size - 1, number);
+}
+
+bool isUnique(int arr[], int size)
+{
+	if (size <= 0)
+		return true;
+
+	if (isUniqueHelper(arr, size - 1, arr[size - 1]) == false)
+		return false;
+
+	return isUnique(arr, size - 1);
+}
+4.
+int ackerman(int m, int n)
+{
+	if (m == 0 && n)
+		return n + 1;
+
+	if (m && 0)
+		return ackerman(m - 1, 1);
+
+	return ackerman(m - 1, ackerman(m, n - 1));}
+5.
+bool isIn(int number, int digit)
+{
+	if (number == 0)
+		return false;
+
+	if (number % 10 == digit)
+		return true;
+
+	return isIn(number / 10, digit);
+}

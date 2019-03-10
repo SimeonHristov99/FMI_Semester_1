@@ -1,0 +1,180 @@
+TASK 00
+Намерете сумата на елементите под/над главния и вторичния диагонал.
+
+int row = -1, column = -1;
+	double darr[MAX_SIZE][MAX_SIZE] = { 0 };
+	int sum = 0, sum1 = 0, sum2 = 0, sum3 = 0, sum9 = 0, sum99 = 0;
+
+	cin >> row >> column;
+
+	int sizeOf = row;
+
+	for (int i = 0; i < row; ++i)
+	{
+		for (int j = 0; j < column; ++j)
+		{
+			cin >> darr[i][j];
+		}
+	}
+
+	cout << endl;
+
+	for (int i = 0; i < row; ++i)
+	{
+		for (int j = 0; j < column; ++j)
+		{
+			cout << darr[i][j] << " ";
+		}
+		cout << endl;
+	}
+
+	for (int i = 0; i < row; ++i)
+	{
+		for (int j = 0; j < sizeOf; ++j)
+		{
+			if (i < j)
+			{
+				sum += darr[i][j];
+			}
+			if (i > j)
+			{
+				sum1 += darr[i][j];
+			}
+			if (i == j)
+			{
+				sum9 += darr[i][j];
+			}
+		}
+	}
+
+	for (int i = 0; i < row; ++i)
+	{
+		for (int j = 0; j < sizeOf; ++j)
+		{
+			if (i + j < column - 1)
+			{
+				sum2 += darr[i][j];
+			}
+			if (i + j > column - 1)
+			{
+				sum3 += darr[i][j];
+			}
+			if (i + j == column - 1)
+			{
+				sum99 += darr[i][j];
+			}
+		}
+	}
+
+	cout << endl;
+
+	cout << "Sum of the numbers above the main diagonal is " << sum << "." << endl;
+	cout << "Sum of the numbers under the main diagonal is " << sum1 << "." << endl;
+	cout << "Sum of the numbers on the main diagonal is " << sum9 << "." << endl;
+	cout << "Sum of the numbers above the secondary diagonal is " << sum2 << "." << endl;
+	cout << "Sum of the numbers under the secondary diagonal is " << sum3 << "." << endl;
+	cout << "Sum of the numbers on the secondary diagonal is " << sum99 << "." << endl;
+
+**************************************************************************************************
+TASK 01
+Изведете числата, които на всеки четен ред са нечетни.
+
+
+	int darr[MAX_SIZE][MAX_SIZE] = { 0 };
+	int row = -1, column = -1;
+
+	cin >> row >> column;
+
+	for (int i = 0; i < row; ++i)	
+		for (int j = 0; j < column; ++j)		
+			cin >> darr[i][j];
+
+	for (int i = 0; i < row; i += 2)
+	{
+		cout << "Row " << i << ": ";
+		for (int j = 0; j < column; ++j)		
+			cout << darr[i][j] << " ";		
+		cout << "\n\nThe odd numbers are: ";
+		for (int j = 0; j < column; ++j)		
+			if (darr[i][j] % 2 != 0)			
+				cout << darr[i][j] << " ";				
+		cout << endl;
+	}
+
+**************************************************************************************************
+TASK 02
+Да се пресметне сумата на всеки стълб и да се изведе максималната сума.
+
+int row = -1, column = -1;
+	int darr[MAX_SIZE][MAX_SIZE] = { 0 };
+	int sum = 0;
+
+	cin >> row >> column;
+
+	for (int i = 0; i < row; ++i)
+	{
+		for (int j = 0; j < column; ++j)
+		{
+			cin >> darr[i][j];
+		}
+	}
+
+	//cout << endl;
+
+	//for (int j = 0; j < column; ++j)
+	//{
+		//for (int i = 0; i < row; ++i)
+		//{
+			//cout << darr[i][j] << " ";
+		//}
+		//cout << endl;
+	//}
+
+	int tempSum = INT_MIN;
+
+	for (int j = 0; j < column; ++j)
+	{
+		sum = 0;
+		for (int i = 0; i < row; ++i)
+		{
+			sum += darr[i][j];
+		}
+		(sum > tempSum) ? tempSum = sum : sum;
+	}
+	cout << endl;
+
+	cout << tempSum;
+
+TASK 03
+Направете функция, която въвежда масив, друга, която да го изведе.
+
+const int MAX_SIZE = 25;
+
+void inputArray(int arr[], size_t &numbersInArray)
+{
+	cout << "Please enter the elements of the array:" << endl;
+	for (size_t index = 0; index < numbersInArray; ++index)
+		cin >> arr[index];
+}
+
+void printArray(const int arr[], size_t &numbersInArray)
+{
+	cout << "The Entered Array Is: ";
+	for (size_t index = 0; index < numbersInArray; ++index)
+		cout << arr[index] << " ";
+}
+
+int main()
+{
+	int arr[MAX_SIZE] = { 0 };
+	size_t numbersInArray = 1;
+
+	cout << "How many whole numbers do you want the array to hold? ";
+	cin >> numbersInArray;
+	cout << endl;
+	inputArray(arr, numbersInArray);
+	cout << endl;
+	printArray(arr, numbersInArray);
+
+	return 0;
+}

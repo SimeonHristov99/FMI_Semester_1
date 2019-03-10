@@ -1,0 +1,299 @@
+TASK 00
+Да се напише програма , която по въведени n цели числа да създава масив от същия брой числа.
+Намерете средноаритметиччното на елементите.
+
+int numbersInArray = -1;
+	int arr[MAX_SIZE] = { 0 };
+	int sum = 0;
+
+	cin >> numbersInArray;
+
+	for (int index = 0; index < numbersInArray; ++index)
+	{
+		cin >> arr[index];
+	}
+
+	for (int index = 0; index < numbersInArray; ++index)
+	{
+		sum += arr[index];
+	}
+
+	cout << "SUM: "<< sum << "\nAVERAGE: " << sum / ((numbersInArray) * 1.0);
+
+TASK 01
+Въведете масив от n елемента, отпечатайте елементите му, след което обърнете реда на елементите (отпечатайте отново).
+
+int numbersInArray = -1;
+	int arr[MAX_SIZE] = { 0 };
+	int temp = -1, endIndex = -1;
+
+	cin >> numbersInArray;
+
+	endIndex = numbersInArray - 1;
+
+	for (int index = 0; index < numbersInArray; ++index)
+	{
+		cout << "arr[ " << index << " ] = ";
+		cin >> arr[index];
+	}
+
+	for (int index = 0; index < numbersInArray; ++index)
+	{
+		cout << arr[index] << " ";
+	}
+	
+	for (int index = 0; index < numbersInArray / 2; ++index)
+	{
+		int temp = arr[index];
+		arr[index] = arr[endIndex];
+		arr[endIndex] = temp;
+		endIndex--;
+	}
+
+	cout << endl;
+
+	for (int index = 0; index < numbersInArray; ++index)
+	{
+		cout << arr[index] << " ";
+	}
+
+**************************************************************************************************
+TASK02
+Да се напише програма, която въвежда от клавиатурата цяло число n и масив от n цели числа.
+Да се намери и изведе броя на тези числа в масива, чийто произведение от цифрите
+е едноцифрено число. Ако няма такива да се изведе подходящо съобщение.
+
+#include "pch.h"
+#include <iostream>
+
+using namespace std;
+
+const int MAX_SIZE = 100;
+
+int count(int numbersInArray, int arr[MAX_SIZE], int cntr)
+{
+	bool onedigit = false;
+	int product = 1;
+	for (int i = 0; i < numbersInArray; ++i)
+	{
+		onedigit = false;
+		product = 1;
+		bool zero = false;
+		if (arr[i] == 0)
+		{
+			zero = true;
+		}
+		while ((arr[i]) != 0 && !(zero))
+		{
+			arr[i] % 10 < 0 ? product *= (arr[i] % 10)*(-1) : product *= arr[i] % 10;
+			arr[i] /= 10;
+		}
+		((((product >= 0) && (product <= 9)) ? onedigit = true : onedigit)) ? cntr++ : cntr;
+	}
+	return cntr;
+}
+
+int main()
+{
+	int numbersInArray = -1;
+	int arr[MAX_SIZE] = { 0 };
+
+	cout << "How many numbers is the array going to hold? ";
+	cin >> numbersInArray;
+
+	for (int i = 0; i < numbersInArray; ++i)
+	{
+		cin >> arr[i];
+	}
+
+	cout << endl << endl;	
+	int cntr = 0;
+	int result = 0;
+	result = count(numbersInArray, arr, cntr);
+	if ((result == 0)) cout << "There are no numbers which have digits that multiplied give a one-digit number!" << endl;
+	else cout << result << endl;
+
+	return 0;
+}
+
+**************************************************************************************************
+TASK 03
+Въведете символен низ, пребройте колко пъти се среща символ, въведен от потребителския вход.
+
+//Create an integer named MAX_SIZE with the value of 100 and make it a constant. You can change it whenever you want.
+
+		//Create a string with the name txt to hold the user's input with a maximum value of the constant.
+	char txt[MAX_SIZE];
+
+		//Ask the user for input: "Enter Text: " and store it in txt.
+	cout << "Enter Text: ";
+	cin.getline(txt, MAX_SIZE);
+
+		//Create a variable of type char to hold the symbol that the program will check for with the initial value of > and the name checkfor.
+	char checkfor = '>';
+
+		//Ask the user: "What Symbol Do You Want To Check For: " and store the answer in checkfor.
+	cout << "What Symbol Do You Want To Check For: ";
+	cin >> checkfor;
+
+		//Create an integer named cntr with the initial value of 0 to hold the number of times checkfor is seen in txt.
+	int cntr = 0;
+
+		//Go through every character comprising txt and see whether it matches checkfor.
+		//If it does, add 1 to cntr.
+		//If it does not, continue with the next character.
+		//When there are no more characters to check output: "Answer: " cntr.
+
+	for (int i = 0; txt[i] != 0; ++i)
+	{
+		txt[i] == checkfor ? cntr++ : cntr;
+	}
+
+	cout <<"\nAnswer: "<< checkfor << " Was Seen " << cntr << " Times In The Text You Entered." << endl;
+
+**************************************************************************************************
+TASK 04
+По въведен символен низ, преобразувайте го като всяка малка буква стане главна и обратно,
+символите ", . ! ?" да не се пипат.
+
+//Create a constant of type int to hold the maximum number of the elements that will be stored.
+		//Create an array of type string with the name txt to hold the user input with the maximum value of the constant.
+	char txt[MAX_SIZE];
+		//Ask the user for input: "Please Enter Text (maximum *the constant* characters): " and store it in txt.
+	cout << "Please Enter Text (maximum " << MAX_SIZE << " characters): ";
+	cin.getline(txt, MAX_SIZE);
+		//Create an integer with the name diff that will store the difference between 'a' and 'A'.
+	int diff = 'a' - 'A';
+		//Go through every character from txt.
+		//If its value is between 'a' and 'z' subtract diff from it.
+		//If its value is between 'A' and 'Z' add diff to it.
+		//If it does not satisfy the above conditions do not change it.
+	for (int i = 0; txt[i] != 0; ++i)
+	{
+		if (txt[i] >= 'a' && txt[i] <= 'z')
+			txt[i] = (int)txt[i] - diff;
+		else if (txt[i] >= 'A' && txt[i] <= 'Z')
+			txt[i] = (int)txt[i] + diff;
+	}
+		//Output the new array as it should be the answer.
+	cout << "\nAnswer: ";
+	for (int i = 0; txt[i] != 0; ++i)
+		cout << txt[i] << " ";
+	cout << endl;
+
+**************************************************************************************************
+TASK 05
+Въведете двумерна матрица, намерете сумата на всеки ред от матрицата.
+
+#include "pch.h"
+#include <iostream>
+
+/*Task: Въведете двумерна матрица, намерете сумата на всеки ред от матрицата.*/
+
+using namespace std;
+
+const int MAX_SIZE = 100;
+const int cols = 3;
+
+int enterrowsandcols(int *addressOfrows)
+{
+	cout << "How many rows do you want your matrix to hold?";
+	cin >> *addressOfrows;
+	return *addressOfrows;
+}
+
+int main()
+{
+	double darr[MAX_SIZE][MAX_SIZE] = { 0 };
+	int rows = -1;
+
+	enterrowsandcols(&rows);
+
+	for (int i = 0; i < rows; ++i)
+		for (int j = 0; j < 3; ++j)
+			cin >> darr[i][j];
+
+	for (int i = 0; i < rows; ++i)
+	{
+		for (int j = 0; j < 3; ++j)
+		{
+			cout << darr[i][j] << " ";
+		}
+		cout << endl;
+	}			
+	
+	for (int i = 0; i < rows; ++i)
+	{
+		double sumOfRows = 0;
+		for (int j = 0; j < 3; ++j)
+			sumOfRows += darr[i][j];
+		cout << "Sum Of Row " << i + 1 << " = " << sumOfRows << endl;
+	}		
+
+	return 0;
+}
+
+
+**************************************************************************************************
+TASK 06
+По въведена двумерна матрица намерете сумата на двата диагонала.
+
+#include "pch.h"
+#include <iostream>
+
+/*По въведена двумерна матрица намерете сумата на двата диагонала*/
+
+using namespace std;
+
+const int MAX_SIZE = 100;
+const int cols = 3;
+
+int enterrowsandcols(int *addressOfrows)
+{
+	cout << "How many rows do you want your matrix to hold? ";
+	cin >> *addressOfrows;
+	return *addressOfrows;
+}
+
+int main()
+{
+	double darr[MAX_SIZE][MAX_SIZE] = { 0 };
+	int rows = -1;
+
+	enterrowsandcols(&rows);
+
+	for (int i = 0; i < rows; ++i)
+		for (int j = 0; j < 3; ++j)
+			cin >> darr[i][j];
+
+	for (int i = 0; i < rows; ++i)
+	{
+		for (int j = 0; j < 3; ++j)
+		{
+			cout << darr[i][j] << " ";
+		}
+		cout << endl;
+	}
+
+	double sumOfMDiagonal = 0;
+	double sumSecDiag = 0;
+
+	for (int i = 0; i < rows; ++i)
+	{		
+		for (int j = 0; j < 3; ++j)
+		{
+			if (i == j)
+				sumOfMDiagonal += darr[i][j];
+			if (i + j == 3 - 1)
+				sumSecDiag += darr[i][j];
+		}		
+	}
+
+	cout << "Sum Of The Numbers Along The Main Diagonal Is " << sumOfMDiagonal << endl;
+	cout << "Sum Of The Numbers Along The Second Diagonal Is " << sumSecDiag << endl;
+
+	return 0;
+}
+
+
+**************************************************************************************************

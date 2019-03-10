@@ -1,0 +1,148 @@
+1.Напишете програма, която по въведени три числа s, e, n:
+• Намира всички(ако са по-малко от n) или първите n на брой прости числа в интервала
+  [ s, e )
+• Намира всички(ако са по-малко от n) или последните n на брой числа в интервала (s,
+  e], които са палиндроми
+
+2. Да се напише функция, която получава като параметър квадратна матрица с 10 стълба
+от реални числа, замества числата над главния диагонал с числата, които се получават при
+намирането на факториела на съответното число.
+
+3. За въведен масив от символи с максимална дължина 100 да се “премахнат” от масива
+всички символи, които представляват цифри или пунктуационни знаци и да се отпечата
+полученият масив.
+
+4. Да се напише функция, която определя дали дадено въведено число е перфектно. Едно
+естествено число наричаме перфектно, ако е равно на сумата на положителните му
+делители, по-малки от него.
+
+
+========================= SOLUTIONS ===================================
+
+--TASK1-----------------------------------------------------------------------------------------------------
+bool isPrime(int &number)
+{
+	if (number < 2)
+		return false;
+	for (int i = 2; i * i <= number; ++i)
+	{
+		if (number % i == 0)
+			return false;
+	}
+	return true;
+}
+
+bool isPalindrome(int number)
+{
+	int power10 = 1;
+	int temp = number;
+	while (temp)
+	{
+		power10 *= 10;
+		temp /= 10;
+	}
+	power10 /= 10;
+	while (number >= 10 && power10 != 0)
+	{
+		int current = number % 10;
+		int checkWith = number / power10 % 10;
+		if (current != checkWith)
+			return false;
+		power10 /= 100;
+		number /= 10;
+	}
+	return true;
+}
+
+void printPrimes(int &s, int &e, int n)
+{
+	cout << "The prime numbers are: ";
+	for (int i = s; i < e; ++i)
+	{
+		if (n == 0) break;
+		if (isPrime(i))
+		{
+			cout << i << " ";
+			--n;
+		}
+	}
+}
+
+void printPali(int s, int e, int n)
+{
+	cout << "\nThe palindromes are: ";
+	for (int i = s + 1; i <= e; ++i)
+	{
+		if (n == 0) break;
+		if (isPalindrome(i))
+		{
+			cout << i << " ";
+			--n;
+		}
+	}
+}
+
+--TASK2-----------------------------------------------------------------------------------------------------
+
+double fact(int number)
+{
+	if (number == 1)
+		return 1;
+	return number * fact(number - 1);
+}
+
+void _noName(double matrix[][10], int rows)
+{
+	for (int i = 0; i < rows; ++i)
+		for (int j = 0; j < 10; ++j)
+			if (i < j)
+				matrix[i][j] = fact(matrix[i][j]);
+}
+
+--TASK3-----------------------------------------------------------------------------------------------------
+const int MAX_SIZE = 100;
+
+void shiftLeft(char str[])
+{
+	if (str[0] == '\0')
+		return;
+
+	str[0] = str[1];
+
+	return shiftLeft(str + 1);
+}
+
+void removeDigitsSignes(char str[])
+{
+	if (str[0] == '\0')
+		return;
+
+	if (str[0] >= '0' && str[0] <= '9' || str[0] == '.' || str[0] == '?' || str[0] == '!' || str[0] == ',' || str[0] == ':' || str[0] == ';')
+	{
+		shiftLeft(str);
+		return removeDigitsSignes(str);
+	}		
+
+	return removeDigitsSignes(str + 1);
+}
+
+--TASK4-----------------------------------------------------------------------------------------------------
+size_t findDevisorsSum(size_t number, size_t answer = 1)
+{
+	for (size_t i = 2; i < number; ++i)
+		if (number % i == 0)
+			answer += i;
+
+	return answer;
+}
+
+bool isPerfect(size_t number)
+{
+	if (number < 2)
+		return false;
+
+	if (number == findDevisorsSum(number))
+		return true;
+	
+	return 0;
+}
